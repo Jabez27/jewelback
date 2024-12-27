@@ -14,6 +14,7 @@ const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
+const { trusted } = require("mongoose");
 
 mongoose
   .connect("mongodb+srv://jabez:jabez@cluster0.spnnwvs.mongodb.net/")
@@ -25,7 +26,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:4173",
+    origin: true,
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
