@@ -12,12 +12,13 @@ const shopAddressRouter = require("./routes/shop/address-routes");
 const shopOrderRouter = require("./routes/shop/order-routes");
 const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
+require("dotenv").config();
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const { trusted } = require("mongoose");
 
 mongoose
-  .connect("mongodb+srv://jabez:jabez@cluster0.spnnwvs.mongodb.net/")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
 
