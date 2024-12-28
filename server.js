@@ -18,7 +18,7 @@ const commonFeatureRouter = require("./routes/common/feature-routes");
 const { trusted } = require("mongoose");
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect("mongodb+srv://jabez:jabez@cluster0.spnnwvs.mongodb.net")
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
 
