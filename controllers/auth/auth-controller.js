@@ -35,6 +35,7 @@ const registerUser = async (req, res) => {
   }
 };
 
+
 //login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -44,7 +45,7 @@ const loginUser = async (req, res) => {
     if (!checkUser)
       return res.json({
         success: false,
-        message: "User doesn't exists! Please register first",
+        message: "User doesn't exist! Please register first",
       });
 
     const checkPasswordMatch = await bcrypt.compare(
@@ -57,6 +58,7 @@ const loginUser = async (req, res) => {
         message: "Incorrect password! Please try again",
       });
 
+    // Generate JWT token without expiration (removes expiration time)
     const token = jwt.sign(
       {
         id: checkUser._id,
@@ -64,10 +66,10 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      "CLIENT_SECRET_KEY",
-      { expiresIn: "60m" }
+      "CLIENT_SECRET_KEY"
     );
 
+    // Send the token in the cookie
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",
@@ -82,10 +84,11 @@ const loginUser = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "Some error occurred",
     });
   }
 };
+
 
 //logout
 
