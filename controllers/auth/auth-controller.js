@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
 
 
 
-// login
+//login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -59,7 +59,7 @@ const loginUser = async (req, res) => {
         message: "Incorrect password! Please try again",
       });
 
-    // Generate JWT token without expiration (no expiration set, so it's persistent)
+    // Generate JWT token without expiration (removes expiration time)
     const token = jwt.sign(
       {
         id: checkUser._id,
@@ -70,12 +70,8 @@ const loginUser = async (req, res) => {
       "CLIENT_SECRET_KEY"
     );
 
-    // Set the token as a cookie with a maxAge of one year (or any desired duration)
-    res.cookie("token", token, {
-      httpOnly: true, // ensures the cookie is not accessible via JavaScript
-      secure: false, // set to true in production when using HTTPS
-      maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds
-    }).json({
+    // Send the token in the cookie
+    res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",
       user: {
@@ -93,7 +89,6 @@ const loginUser = async (req, res) => {
     });
   }
 };
-
 
 
 
